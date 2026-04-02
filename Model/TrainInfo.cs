@@ -7,6 +7,8 @@ namespace irctc.Model
         public string? TrainNo { get; set; }
         public string? TrainName { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string? TrainId { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? SourceStnName { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? SourceStnCode { get; set; }
@@ -26,5 +28,17 @@ namespace irctc.Model
         public string? Distance { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? Halts { get; set; }
+        public List<TrainRoute> Route { get; set; } = [];
+    }
+
+    public class TrainRoute
+    {
+        public string? StationName { get; set; }
+        public string? StationCode { get; set; }
+        public string? Arrival { get; set; }
+        public string? Departure { get; set; }
+        public string? Distance { get; set; }
+        public string? Day { get; set; }
+        public string? Platform { get; set; }
     }
 }

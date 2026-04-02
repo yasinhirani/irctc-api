@@ -65,22 +65,67 @@ namespace irctc.Utility
 
             return trains;
         }
-        public TrainInfo? ParseTrainInfo(string data)
+        public async Task<TrainInfo?> ParseTrainInfo(string data, string _erailBaseUrl, HttpClient _client)
         {
             if (data == "~~~~~Train not found")
             {
                 throw new Exception("Train not found");
             }
 
+            var route = new List<TrainRoute>();
+
             var rawData = data.Split("~~~~~~~~").Where(d => d.Trim() != "").ToArray();
 
             var trainDetails = rawData[0].Split("~^")[1].Split("~");
             var otherDetails = rawData[1].Split("~");
 
+            if (otherDetails is not null && otherDetails.Length > 12)
+            {
+                var uri = $"{_erailBaseUrl}/data.aspx?Action=TRAINROUTE&Password=2012&Data1={otherDetails[12]}&Data2=0&Cache=true";
+
+                var request = new HttpRequestMessage(HttpMethod.Get, uri);
+
+                request.Headers.Add("User-Agent",
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
+                "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
+
+                request.Headers.Add("Referer", _erailBaseUrl);
+                request.Headers.Add("Accept",
+                    "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+
+                HttpResponseMessage response = await _client.SendAsync(request);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var routeRawData = await response.Content.ReadAsStringAsync();
+                    var stationsRawData = routeRawData.Split("^");
+
+                    foreach (var station in stationsRawData)
+                    {
+                        var stationDetail = station.Split("~~~")[0].Split("~");
+
+                        if (stationDetail.Length > 1)
+                        {
+                            route.Add(new TrainRoute
+                            {
+                                StationCode = stationDetail[1],
+                                StationName = stationDetail[2],
+                                Arrival = stationDetail[3].Replace(".", ":"),
+                                Departure = stationDetail[4].Replace(".", ":"),
+                                Distance = stationDetail[6],
+                                Day = stationDetail[7],
+                                Platform = stationDetail.Length > 8 ? stationDetail[8] : "N/A"
+                            });
+                        }
+                    }
+                }
+            }
+
             var trainInfo = new TrainInfo
             {
                 TrainNo = trainDetails[0],
                 TrainName = trainDetails[1],
+                TrainId = otherDetails?[12],
                 FromStnName = trainDetails[2],
                 FromStnCode = trainDetails[3],
                 ToStnName = trainDetails[4],
@@ -88,9 +133,10 @@ namespace irctc.Utility
                 FromTime = trainDetails[10].Replace(".", ":"),
                 ToTime = trainDetails[11].Replace(".", ":"),
                 TravelTime = trainDetails[12].Replace(".", ":"),
-                TrainType = otherDetails[11],
-                Distance = otherDetails[18],
-                RunningDays = trainDetails[13]
+                TrainType = otherDetails?[11],
+                Distance = otherDetails?[18],
+                RunningDays = trainDetails[13],
+                Route = route
             };
 
             return trainInfo;

@@ -63,7 +63,6 @@ namespace irctc.Repository
 
             var request = new HttpRequestMessage(HttpMethod.Get, uri);
 
-            // 🔥 IMPORTANT headers
             request.Headers.Add("User-Agent",
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
                 "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
@@ -112,7 +111,7 @@ namespace irctc.Repository
 
                 try
                 {
-                    var trainInfo = new ParseTrainData().ParseTrainInfo(data);
+                    var trainInfo = await new ParseTrainData().ParseTrainInfo(data, _erailBaseUrl, _client);
 
                     return trainInfo;
                 }
