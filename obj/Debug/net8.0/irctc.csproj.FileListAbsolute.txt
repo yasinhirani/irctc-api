@@ -34,3 +34,4 @@ C:\office\learning\.net\irctc\obj\Debug\net8.0\ref\irctc.dll
 C:\office\learning\.net\irctc\bin\Debug\net8.0\Misc\Stations.json
 C:\office\learning\.net\irctc\bin\Debug\net8.0\HtmlAgilityPack.dll
 C:\office\learning\.net\irctc\bin\Debug\net8.0\FluentValidation.dll
+C:\office\learning\.net\irctc\obj\Debug\net8.0\irctc.sourcelink.json
