@@ -10,8 +10,6 @@ builder.Services.AddSwaggerGen();
 
 builder.AddStartupConfigurations();
 
-builder.WebHost.UseUrls("http://172.16.5.112:8080");
-
 var app = builder.Build();
 
 app.MapControllers();
