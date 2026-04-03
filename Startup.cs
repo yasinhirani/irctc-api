@@ -1,3 +1,4 @@
+using System.Text.Json;
 using irctc.Repository;
 using irctc.Repository.Interface;
 using irctc.Service;
@@ -17,7 +18,10 @@ namespace irctc
 
             builder.Services.AddHttpClient();
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+            });
 
             builder.Services.AddCors(options =>
             {

@@ -32,7 +32,7 @@ namespace irctc.Service
                 Error = ""
             };
         }
-        public async Task<ResponseDto<TrainLiveStatusResponse?>> GetTrainLiveStatusDetails(int trainNo, string date)
+        public async Task<ResponseDto<LiveTrainRes?>> GetTrainLiveStatusDetails(int trainNo, string date)
         {
             var result = await new LiveStatusValidations().ValidateAsync(new LiveStatusRequestDto { TrainNo = trainNo.ToString(), Date = date });
 
@@ -43,37 +43,34 @@ namespace irctc.Service
 
             var data = await _repo.GetTrainLiveStatusDetails(trainNo, date);
 
-            if (data is not null)
+            // if (data is not null)
+            // {
+            //     var liveDetails = new TrainLiveStatusResponse()
+            //     {
+            //         TrainNo = data.Data?.TrainNo,
+            //         TrainName = data.Data?.TrainName,
+            //         Date = data.Data?.Date,
+            //         StatusNote = data.Data?.StatusNote,
+            //         LastUpdate = data.Data?.LastUpdate,
+            //         TotalStations = data.Data?.TotalStations ?? 0,
+            //         Stations = data.Data?.Stations?.Select(s => new TrainLiveStatusStationResponse
+            //         {
+            //             StationName = s.StationName,
+            //             StationCode = s.StationCode,
+            //             Platform = s.Platform,
+            //             DistanceKm = int.TryParse(s.DistanceKm, out var result) ? result : null,
+            //             Arrival = s.Arrival,
+            //             Departure = s.Departure
+            //         }).ToList(),
+            //         CoachPosition = data.Data?.Stations?.FirstOrDefault()?.CoachPosition ?? null
+            //     };
+
+            // }
+
+            return new ResponseDto<LiveTrainRes?>
             {
-                var liveDetails = new TrainLiveStatusResponse()
-                {
-                    TrainNo = data.Data?.TrainNo,
-                    TrainName = data.Data?.TrainName,
-                    Date = data.Data?.Date,
-                    StatusNote = data.Data?.StatusNote,
-                    LastUpdate = data.Data?.LastUpdate,
-                    TotalStations = data.Data?.TotalStations ?? 0,
-                    Stations = data.Data?.Stations?.Select(s => new TrainLiveStatusStationResponse
-                    {
-                        StationName = s.StationName,
-                        StationCode = s.StationCode,
-                        Platform = s.Platform,
-                        DistanceKm = int.TryParse(s.DistanceKm, out var result) ? result : null,
-                        Arrival = s.Arrival,
-                        Departure = s.Departure
-                    }).ToList(),
-                    CoachPosition = data.Data?.Stations?.FirstOrDefault()?.CoachPosition ?? null
-                };
-                return new ResponseDto<TrainLiveStatusResponse?>
-                {
-                    Data = liveDetails,
-                    Error = ""
-                };
-            }
-            return new ResponseDto<TrainLiveStatusResponse?>
-            {
-                Data = null,
-                Error = "No live details found"
+                Data = data,
+                Error = ""
             };
         }
         public async Task<ResponseDto<List<LiveStationAt>>> GetLiveStationAtDetails(string stationCode)
