@@ -117,7 +117,7 @@ namespace irctc.Model
         public double? DelayInDeparture { get; set; }
 
         [JsonPropertyName("departed")]
-        public bool Departed { get; set; } = true;
+        public bool Departed { get; set; } = false;
 
         [JsonPropertyName("station_name")]
         public string? StationName { get; set; }
