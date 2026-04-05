@@ -14,15 +14,13 @@ namespace irctc.Repository
         private readonly string _irctcConnectBaseUrl = "";
         private readonly string _irctcConnectApiKey = "";
         private readonly string _liveStatusApiBAseUrl = "";
-        private readonly IStationRepository _stationRepo;
-        public TrainServiceRepository(HttpClient client, IConfiguration configuration, IStationRepository stationRepo)
+        public TrainServiceRepository(HttpClient client, IConfiguration configuration)
         {
             _client = client;
             _erailBaseUrl = configuration["ErailBaseUrl"] ?? "";
             _irctcConnectBaseUrl = configuration["IrctcConnectBaseUrl"] ?? "";
             _irctcConnectApiKey = configuration["IrctcConnectApiKey"] ?? "";
             _liveStatusApiBAseUrl = configuration["LiveStatusApiBaseUrl"] ?? "";
-            _stationRepo = stationRepo;
         }
         public async Task<PnrModel?> GetPnrDetails(long pnrNumber)
         {
@@ -42,9 +40,9 @@ namespace irctc.Repository
             }
             return null;
         }
-        public async Task<LiveTrainRes?> GetTrainLiveStatusDetails(int trainNo, string date)
+        public async Task<LiveTrainRes?> GetTrainLiveStatusDetails(int trainNo, string startDay)
         {
-            var uri = $"{_liveStatusApiBAseUrl}/live_status?train_no={trainNo}&lang=en&date={date}";
+            var uri = $"{_liveStatusApiBAseUrl}/train_eta_data/{trainNo}/1.json?start_day={startDay}";
 
             HttpResponseMessage response = await _client.GetAsync(uri);
 
@@ -52,20 +50,9 @@ namespace irctc.Repository
             {
                 var data = await response.Content.ReadFromJsonAsync<LiveTrainRes>();
 
-                var stations = await _stationRepo.GetAllStations("");
-
                 if (data is not null)
                 {
-                    data.TrainNo = trainNo;
-
-                    data.Stations.ForEach(s =>
-                    {
-                        s.StationName = stations.Find(st => st.Code == s.StationCode)?.Name;
-                        s.Distance = (int)s.Distance;
-                    });
-
-                    data.SourceStationName = stations.Find(st => st.Code == data.SourceStation)?.Name;
-                    data.DestinationStationName = stations.Find(st => st.Code == data.DestinationStation)?.Name;
+                    data.Disclaimer = string.Join(". ", data.Disclaimer?.Split(". ").SkipLast(1) ?? []);
 
                     return data;
                 }

@@ -22,9 +22,9 @@ namespace irctc.Controller
             return Ok(pnrDetails);
         }
         [HttpGet("liveStatus")]
-        public async Task<IActionResult> GetTrainLiveStatusDetails([FromQuery] int trainNo, [FromQuery] string date)
+        public async Task<IActionResult> GetTrainLiveStatusDetails([FromQuery] int trainNo, [FromQuery] string startDay)
         {
-            var liveStatus = await _service.GetTrainLiveStatusDetails(trainNo, date);
+            var liveStatus = await _service.GetTrainLiveStatusDetails(trainNo, startDay);
 
             return Ok(liveStatus);
         }

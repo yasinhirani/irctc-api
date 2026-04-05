@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\office\\learning\\.net\\irctc\\irctc.csproj": {}
+    "/home/yasin/Personal/irctc-api/irctc.csproj": {}
   },
   "projects": {
-    "C:\\office\\learning\\.net\\irctc\\irctc.csproj": {
+    "/home/yasin/Personal/irctc-api/irctc.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\office\\learning\\.net\\irctc\\irctc.csproj",
+        "projectUniqueName": "/home/yasin/Personal/irctc-api/irctc.csproj",
         "projectName": "irctc",
-        "projectPath": "C:\\office\\learning\\.net\\irctc\\irctc.csproj",
-        "packagesPath": "C:\\Users\\YasinHirani\\.nuget\\packages\\",
-        "outputPath": "C:\\office\\learning\\.net\\irctc\\obj\\",
+        "projectPath": "/home/yasin/Personal/irctc-api/irctc.csproj",
+        "packagesPath": "/home/yasin/.nuget/packages/",
+        "outputPath": "/home/yasin/Personal/irctc-api/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\YasinHirani\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/home/yasin/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -32,11 +32,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -79,7 +74,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.419/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.125/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

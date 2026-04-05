@@ -72,92 +72,144 @@ namespace irctc.Model
         public Departure? Departure { get; set; }
     }
 
-    public class DaySchedule
+    public class NonStopStations
     {
-        [JsonPropertyName("sch_arrival_date")]
-        public string? ArrivalDate { get; set; }
+        [JsonPropertyName("sta")]
+        public string? ScheduleArrival{ get; set; }
 
-        [JsonPropertyName("sch_arrival_time")]
-        public string? ArrivalTime { get; set; }
-
-        [JsonPropertyName("sch_departure_date")]
-        public string? DepartureDate { get; set; }
-
-        [JsonPropertyName("sch_departure_time")]
-        public string? DepartureTime { get; set; }
-
-        [JsonPropertyName("actual_arrival_date")]
-        public string? ActualArrivalDate { get; set; }
-
-        [JsonPropertyName("actual_arrival_time")]
-        public string? ActualArrivalTime { get; set; }
-
-        [JsonPropertyName("actual_departure_date")]
-        public string? ActualDepartureDate { get; set; }
-
-        [JsonPropertyName("actual_departure_time")]
-        public string? ActualDepartureTime { get; set; }
+        [JsonPropertyName("std")]
+        public string? ScheduleDeparture { get; set; }
 
         [JsonPropertyName("station_code")]
         public string? StationCode { get; set; }
-
-        // [JsonPropertyName("delay_in_departure")]
-        // public int? DelayInDeparture { get; set; } = null;
-
-        [JsonPropertyName("stops")]
-        public bool Stops { get; set; }
-
-        [JsonPropertyName("platform")]
-        public string? Platform { get; set; }
-
-        [JsonPropertyName("distance")]
-        public double Distance { get; set; }
-
-        [JsonPropertyName("delay_in_departure")]
-        public double? DelayInDeparture { get; set; }
-
-        [JsonPropertyName("departed")]
-        public bool Departed { get; set; } = false;
-
+        
         [JsonPropertyName("station_name")]
         public string? StationName { get; set; }
+
+        [JsonPropertyName("distance_from_source")]
+        public double? Distance { get; set; }
+    }
+
+    public class DaySchedule
+    {
+        [JsonPropertyName("sta")]
+        public string? ScheduleArrival{ get; set; }
+
+        [JsonPropertyName("std")]
+        public string? ScheduleDeparture { get; set; }
+
+        [JsonPropertyName("eta")]
+        public string? EstimateArrival { get; set; }
+
+        [JsonPropertyName("etd")]
+        public string? EstimateDeparture { get; set; }
+
+        [JsonPropertyName("station_code")]
+        public string? StationCode { get; set; }
+        
+        [JsonPropertyName("station_name")]
+        public string? StationName { get; set; }
+
+        [JsonPropertyName("platform_number")]
+        public double? Platform { get; set; }
+
+        [JsonPropertyName("distance_from_source")]
+        public double? Distance { get; set; }
+
+        [JsonPropertyName("arrival_delay")]
+        public double? ArrivalDelay { get; set; }
+
+        [JsonPropertyName("a_day")]
+        public double? ArrivalDay { get; set; }
+
+        [JsonPropertyName("halt")]
+        public double? Halt { get; set; }
+
+        [JsonPropertyName("non_stops")]
+        public List<NonStopStations> NonStopStations { get; set; } = [];
     }
 
     public class LiveTrainRes
     {
-        [JsonPropertyName("destination_station")]
+        [JsonPropertyName("destination")]
         public string? DestinationStation { get; set; }
 
-        [JsonPropertyName("destination_station_name")]
+        [JsonPropertyName("dest_stn_name")]
         public string? DestinationStationName { get; set; }
 
-        [JsonPropertyName("lastUpdateIsoDate")]
-        public DateTime LastUpdateIsoDate { get; set; }
+        [JsonPropertyName("update_time")]
+        public string? UpdatedAt { get; set; }
 
-        [JsonPropertyName("curStn")]
-        public string? CurStn { get; set; }
-
-        [JsonPropertyName("train_type")]
-        public string? TrainType { get; set; }
+        [JsonPropertyName("current_station_code")]
+        public string? CurrentStation { get; set; }
 
         [JsonPropertyName("train_name")]
         public string? TrainName { get; set; }
 
-        [JsonPropertyName("train_no")]
+        [JsonPropertyName("train_number")]
         public int? TrainNo { get; set; }
 
-        [JsonPropertyName("source_station")]
+        [JsonPropertyName("source")]
         public string? SourceStation { get; set; }
 
-        [JsonPropertyName("source_station_name")]
+        [JsonPropertyName("source_stn_name")]
         public string? SourceStationName { get; set; }
 
-        [JsonPropertyName("start_date")]
+        [JsonPropertyName("train_start_date")]
         public string? StartDate { get; set; }
+        
+        [JsonPropertyName("distance_from_source")]
+        public double? DistanceFromSource { get; set; }
 
-        [JsonPropertyName("days_schedule")]
-        public List<DaySchedule> Stations { get; set; } = [];
+        [JsonPropertyName("total_distance")]
+        public double? TotalDistance { get; set; }
+        
+        [JsonPropertyName("title")]
+        public string? Title { get; set; }
+        
+        [JsonPropertyName("new_message")]
+        public string? NewMessage { get; set; }
+
+        [JsonPropertyName("disclaimer")]
+        public string? Disclaimer { get; set; }
+
+        [JsonPropertyName("upcoming_stations")]
+        public List<DaySchedule> UpcomingStations { get; set; } = [];
+
+        [JsonPropertyName("previous_stations")]
+        public List<DaySchedule> PreviousStations { get; set; } = [];
+
+        [JsonPropertyName("delay")]
+        public double? Delay { get; set; }
+
+        [JsonPropertyName("bubble_message")]
+        public BubbleMessage? BubbleMessage { get; set; }
+        
+        [JsonPropertyName("current_location_info")]
+        public List<CurrnetLocationInfo?> CurrentLocationInfo { get; set; } = [];
     }
 
+    public class BubbleMessage
+    {
+        [JsonPropertyName("station_name")]
+        public string? StationName { get; set; }
 
+        [JsonPropertyName("message_type")]
+        public string? MessageType { get; set; }
+        
+        [JsonPropertyName("station_time")]
+        public string? StationTime { get; set; }
+    }
+
+    public class CurrnetLocationInfo
+    {
+        [JsonPropertyName("type")]
+        public double? Type { get; set; }
+
+        [JsonPropertyName("label")]
+        public string? Label { get; set; }
+        
+        [JsonPropertyName("message")]
+        public string? Message { get; set; }
+    }
 }
