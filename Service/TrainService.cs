@@ -32,16 +32,16 @@ namespace irctc.Service
                 Error = ""
             };
         }
-        public async Task<ResponseDto<LiveTrainRes?>> GetTrainLiveStatusDetails(int trainNo, string date)
+        public async Task<ResponseDto<LiveTrainRes?>> GetTrainLiveStatusDetails(int trainNo, int startDay)
         {
-            var result = await new LiveStatusValidations().ValidateAsync(new LiveStatusRequestDto { TrainNo = trainNo.ToString(), Date = date });
+            var result = await new LiveStatusValidations().ValidateAsync(new LiveStatusRequestDto { TrainNo = trainNo.ToString(), StartDay = startDay });
 
             if (!result.IsValid)
             {
                 throw new BadRequestException(result.Errors[0].ErrorMessage);
             }
 
-            var data = await _repo.GetTrainLiveStatusDetails(trainNo, date);
+            var data = await _repo.GetTrainLiveStatusDetails(trainNo, startDay);
 
             // if (data is not null)
             // {

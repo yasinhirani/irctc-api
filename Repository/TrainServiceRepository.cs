@@ -40,7 +40,7 @@ namespace irctc.Repository
             }
             return null;
         }
-        public async Task<LiveTrainRes?> GetTrainLiveStatusDetails(int trainNo, string startDay)
+        public async Task<LiveTrainRes?> GetTrainLiveStatusDetails(int trainNo, int startDay)
         {
             var uri = $"{_liveStatusApiBAseUrl}/train_eta_data/{trainNo}/1.json?start_day={startDay}";
 

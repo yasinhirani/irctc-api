@@ -13,9 +13,10 @@ namespace irctc.Validations
             .MinimumLength(5).WithMessage("Train No must be 5 numbers")
             .MaximumLength(5).WithMessage("Train No must not exceed 5 numbers")
             .Matches(@"^\d+$").WithMessage("Please enter a valid Train No");
-            RuleFor(x => x.Date)
-            .NotEmpty().WithMessage("Date is required")
-            .Must(BeValidDate).WithMessage("Date must be valid and in DD-MM-YYYY format.");
+            RuleFor(x => x.StartDay)
+            .NotNull().WithMessage("Start Day is required")
+            .GreaterThanOrEqualTo(0).WithMessage("Start Day must be greater than or equal to 0.")
+            .LessThanOrEqualTo(2).WithMessage("Start Day must be less than or equal to 2.");
         }
         private bool BeValidDate(string date)
         {
