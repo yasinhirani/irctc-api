@@ -142,6 +142,9 @@ namespace irctc.Model
 
         [JsonPropertyName("current_station_code")]
         public string? CurrentStation { get; set; }
+        
+        [JsonPropertyName("current_station_name")]
+        public string? CurrentStationName { get; set; }
 
         [JsonPropertyName("train_name")]
         public string? TrainName { get; set; }
@@ -187,6 +190,21 @@ namespace irctc.Model
         
         [JsonPropertyName("current_location_info")]
         public List<CurrnetLocationInfo?> CurrentLocationInfo { get; set; } = [];
+
+        [JsonPropertyName("current_stn_sta")]
+        public string? CurrentStationScheduleArrival { get; set; }
+        
+        [JsonPropertyName("current_stn_std")]
+        public string? CurrentStationScheduleDeparture { get; set; }
+        
+        [JsonPropertyName("eta")]
+        public string? CurrentStationArrival { get; set; }
+        
+        [JsonPropertyName("etd")]
+        public string? CurrentStationDeparture { get; set; }
+        
+        [JsonPropertyName("next_stoppage_info")]
+        public NextStoppageInfo? NextStoppageInfo { get; set; }
     }
 
     public class BubbleMessage
@@ -211,5 +229,11 @@ namespace irctc.Model
         
         [JsonPropertyName("message")]
         public string? Message { get; set; }
+    }
+
+    public class NextStoppageInfo
+    {
+        [JsonPropertyName("next_stoppage")]
+        public string? StationName { get; set; }
     }
 }
